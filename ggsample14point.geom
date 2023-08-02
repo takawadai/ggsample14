@@ -23,7 +23,7 @@ uniform mat4 mn;                                      // 法線ベクトルの�
 layout(points) in;
 
 // ジオメトリシェーダから出力する図形要素と最大頂点数
-layout(triangle_strip, max_vertices = 12) out;
+layout(triangle_strip, max_vertices = 85) out;
 
 // ラスタライザに送る頂点属性
 out vec4 iamb;                                        // 環境光の反射光強度
