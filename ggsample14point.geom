@@ -19,9 +19,15 @@ const vec4 position[] = vec4[](
   //vec4( 0.0,  0.0, -0.1, 0.0)
   );
 
-//四面体の位置
+//四面体の位置（ここの頂点のつけ方が悪い？
 const vec4 position2[] = vec4[](
+ vec4(0.0, -0.1, 0.0, 0.0),
+ vec4(0.1, 0.0, 0.0, 0.0),
+ vec4(0.0, 0.0, 0.1, 0.0),
+ //vec4(0.0, -0.1, 0.0, 0.0),
+
   vec4(0.0, 0.1, 0.0, 0.0),
+  //vec4(-0.1, 0.0, 0.0, 0.0),
   vec4(0.0, 0.0, -0.1, 0.0),
   vec4(-0.1, 0.0, 0.0, 0.0),
   vec4(0.0, 0.0, 0.1, 0.0),
@@ -89,6 +95,7 @@ void main()
   //glProgramParameteri(program, GL_GEOMETRY_TYPE, GL_POINTS);
   //glProgramParameteri(program, GL_GEOMETRY_TYPE, GL_POINTS);
 
+  /**
   for (int i = 0; i < position.length(); ++i)
   {
     // モデルビュー変換後の点の位置を中心として頂点位置を求め投影変換する
@@ -102,8 +109,10 @@ void main()
   }
 
   EndPrimitive();
+  /**/
 
-  for (int i = 0; i < position2.length(); ++i)
+  /**/
+  for (int i = 0; i < 3; ++i)
   {
     // モデルビュー変換後の点の位置を中心として頂点位置を求め投影変換する
     gl_Position = mp * (p + position2[i]);
@@ -116,4 +125,5 @@ void main()
   }
 
   EndPrimitive();
+  /**/
 }

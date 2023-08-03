@@ -40,7 +40,7 @@ int GgApp::main(int argc, const char* const* argv)
   // 隠面消去を有効にする
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
-
+  
   // 図形用のプログラムオブジェクト
   GgSimpleShader simple{ PROJECT_NAME ".vert", PROJECT_NAME ".frag" };
 
@@ -49,13 +49,13 @@ int GgApp::main(int argc, const char* const* argv)
 
   // OBJ ファイルの読み込み
   const auto object{ ggElementsObj("bunny.obj", true) };
-
+  
   // 物体の材質
   const GgSimpleShader::MaterialBuffer material{ objectMaterial };
 
   // 点
   const auto sphere{ ggPointsSphere(200, 2.0f, 0.0f, 0.0f, 0.0f) };
-
+  
   // ビュー変換行列を mv に求める
   const auto mv{ ggLookat(0.0f, 0.0f, 7.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f) };
 
