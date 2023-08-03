@@ -7,7 +7,9 @@ const vec4 position[] = vec4[](
   vec4( 0.1,  0.0, 0.0, 0.0),
 
   vec4( 0.0,  0.0, -0.1, 0.0),
-  vec4( 0.0,  -0.1, 0.0, 0.0)
+  vec4( 0.0,  -0.1, 0.0, 0.0),
+  vec4( -0.1, 0.0, 0.0, 0.0),
+  vec4( 0.0, 0.0, 0.1, 0.0)
   //vec4( 0.1,  0.0, 0.0, 0.0),
   //vec4( 0.0,  -0.1, 0.0, 0.0),
   //vec4( 0.0,  0.0, -0.1, 0.0)
@@ -19,7 +21,9 @@ const vec4 color[] = vec4[](
   vec4(0.0, 1.0, 0.0, 1.0),
   vec4(0.0, 0.0, 1.0, 1.0),
   vec4(1.0, 0.0, 0.0, 1.0),
-  vec4(0.0, 1.0, 0.0, 1.0)
+  vec4(0.0, 1.0, 0.0, 1.0),
+  vec4(0.0, 0.0, 1.0, 1.0),
+   vec4(1.0, 0.0, 0.0, 1.0)
   //vec4(0.0, 0.0, 1.0, 1.0),
   //vec4(1.0, 0.0, 0.0, 1.0),
   //vec4(0.0, 1.0, 0.0, 1.0),
@@ -51,7 +55,7 @@ void main()
   //glProgramParameteri(program, GL_GEOMETRY_TYPE, GL_POINTS);
   //glProgramParameteri(program, GL_GEOMETRY_TYPE, GL_POINTS);
 
-  for (int i = 0; i < 5; ++i)
+  for (int i = 0; i < 7; ++i)
   {
     // モデルビュー変換後の点の位置を中心として頂点位置を求め投影変換する
     gl_Position = mp * (p + position[i]);
