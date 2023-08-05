@@ -1,5 +1,6 @@
 #version 410 core
 
+
 // 光源
 layout (std140) uniform Light
 {
@@ -103,23 +104,10 @@ out vec4 iamb;                                        // 環境光の反射光�
 out vec4 idiff;                                       // 拡散反射光強度
 out vec4 ispec;                                       // 鏡面反射光強度
 
-//layout (location = 1) in vec4 nv;                     // 頂点の法線ベクトル
-
 void main()
 {
   // 点の位置をモデルビュー変換する
   vec4 p = mv * gl_in[0].gl_Position;
-  /**
-  vec3 v = -normalize(p.xyz / p.w);                   // 視線ベクトル
-  vec3 l = normalize((lpos * p.w - p * lpos.w).xyz);  // 光線ベクトル
-  vec3 n = normalize((mn * color[0]).xyz);                // 法線ベクトル
-  float lsize = sqrt(l.x * l.x + l.y * l.y + l.z * l.z);//光線ベクトルの大きさ
-  float vsize = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);//視線ベクトルの大きさ
-  vec3 h = (l + v)/(lsize + vsize);// 中間ベクトル
-
-  float NL = n.x * l.x + n.y * l.y + n.z * l.z;
-  float NH = n.x * h.x + n.y * h.y + n.z * h.z;
-  /**/
 
   //ジオメトリシェーダ
   //glProgramParameteri(program, GL_GEOMETRY_TYPE, GL_POINTS);
@@ -130,22 +118,19 @@ void main()
   {
     // モデルビュー変換後の点の位置を中心として頂点位置を求め投影変換する
     gl_Position = mp * (p + position[i]);
-    /**/
-    vec3 v = -normalize(gl_Position.xyz / gl_Position.w);                   // 視線ベクトル
+    vec3 v = -normalize(gl_Position.xyz / gl_Position.w);                 // 視線ベクトル
     vec3 l = normalize((lpos * gl_Position.w - gl_Position * lpos.w).xyz);  // 光線ベクトル
-    vec3 n = normalize((mn * color[0]).xyz);                // 法線ベクトル
+    vec3 n = normalize((mn * gl_in[0].gl_Position * 10.0).xyz);                  // 法線ベクトル
     float lsize = sqrt(l.x * l.x + l.y * l.y + l.z * l.z);//光線ベクトルの大きさ
     float vsize = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);//視線ベクトルの大きさ
     vec3 h = (l + v)/(lsize + vsize);// 中間ベクトル
 
+    iamb =  vec4(kamb.x * lamb.x , kamb.y * lamb.y , kamb.z * lamb.z, kamb.w * lamb.w);
+
     float NL = n.x * l.x + n.y * l.y + n.z * l.z;
+    idiff = max(NL, 0) * vec4(kdiff.x * ldiff.x , kdiff.y * ldiff.y, kdiff.z * ldiff.z, kdiff.w * ldiff.w);;
     float NH = n.x * h.x + n.y * h.y + n.z * h.z;
-     /**/
-    iamb = vec4(kamb.x * lamb.x , kamb.y * lamb.y , kamb.z * lamb.z, kamb.w * lamb.w);
-    //vec4 idiff = max(NL, 0) * vec4(kdiff.x * ldiff.x , kdiff.y * ldiff.y, kdiff.z * ldiff.z, kdiff.w * ldiff.w);
-    vec4 idiff = color[i];
-    ispec = vec4(0.0);
-    //ispec = pow(max(NH, 0), kshi) * vec4(kspec.x * lspec.x , kspec.y * lspec.y, kspec.z * lspec.z, kspec.w * lspec.w);;
+    ispec = pow(max(NH, 0), kshi) * vec4(kspec.x * lspec.x , kspec.y * lspec.y, kspec.z * lspec.z, kspec.w * lspec.w);
 
     EmitVertex();
   }
@@ -153,7 +138,7 @@ void main()
   EndPrimitive();
   /**/
 
-  /**　
+  /**
   for (int i = 0; i < position2.length(); ++i)
   {
     // モデルビュー変換後の点の位置を中心として頂点位置を求め投影変換する
