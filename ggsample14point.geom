@@ -39,10 +39,13 @@ const vec4 position[] = vec4[](
 
 //四面体の位置（ここの頂点のつけ方が悪い？
 const vec4 position2[] = vec4[](
-   vec4(0.0, 0.0, -0.1, 0.0),
-   vec4(0.0, 0.1, 0.0, 0.0),
+   vec4(0.0, -0.1, 0.0, 0.0),
+   vec4(0.1, 0.0, 0.0, 0.0),
+   
+   vec4(0.0, 0.0, 0.1, 0.0),
    vec4(-0.1, 0.0, 0.0, 0.0),
-   vec4(-0.1, 0.0, 0.0, 0.0)
+   vec4(0.0, 0.1, 0.0, 0.0),
+   vec4(0.0, 0.0, -0.1, 0.0)
 /**
    vec4(0.0, 0.0, -0.1, 0.0),
    vec4(0.0, 0.1, 0.0, 0.0),
@@ -125,20 +128,21 @@ void main()
     float vsize = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);//視線ベクトルの大きさ
     vec3 h = (l + v)/(lsize + vsize);// 中間ベクトル
 
-    iamb =  vec4(kamb.x * lamb.x , kamb.y * lamb.y , kamb.z * lamb.z, kamb.w * lamb.w);
-
+    //iamb =  vec4(kamb.x * lamb.x , kamb.y * lamb.y , kamb.z * lamb.z, kamb.w * lamb.w);
+    iamb = vec4(0.0);
     float NL = n.x * l.x + n.y * l.y + n.z * l.z;
-    idiff = max(NL, 0) * vec4(kdiff.x * ldiff.x , kdiff.y * ldiff.y, kdiff.z * ldiff.z, kdiff.w * ldiff.w);;
+    //idiff = max(NL, 0) * vec4(kdiff.x * ldiff.x , kdiff.y * ldiff.y, kdiff.z * ldiff.z, kdiff.w * ldiff.w);;
+    idiff = color[i];
     float NH = n.x * h.x + n.y * h.y + n.z * h.z;
-    ispec = pow(max(NH, 0), kshi) * vec4(kspec.x * lspec.x , kspec.y * lspec.y, kspec.z * lspec.z, kspec.w * lspec.w);
-
+    //ispec = pow(max(NH, 0), kshi) * vec4(kspec.x * lspec.x , kspec.y * lspec.y, kspec.z * lspec.z, kspec.w * lspec.w);
+    ispec = vec4(0.0);
     EmitVertex();
   }
 
   EndPrimitive();
   /**/
 
-  /**
+  /**/
   for (int i = 0; i < position2.length(); ++i)
   {
     // モデルビュー変換後の点の位置を中心として頂点位置を求め投影変換する
