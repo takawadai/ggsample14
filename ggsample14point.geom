@@ -114,7 +114,6 @@ void main()
     gl_Position = mp * (p + position2[i]);
 
     // モデルビュー変換後の点の位置を中心として頂点位置を求め投影変換する
-    gl_Position = mp * (p + position2[i]);
     vec3 v = -normalize((p + position2[i]).xyz / (p + position2[i]).w);                 // 視線ベクトル
     vec3 l = normalize((lpos * (p + position2[i]).w - (p + position2[i]) * lpos.w).xyz);  // 光線ベクトル
     vec3 n = normalize((mn * (position2[i] * 10.0)).xyz);                  // 法線ベクトル
